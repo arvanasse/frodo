@@ -55,7 +55,7 @@ describe Frodo::Middleware::Authentication do
           expect(Frodo).to receive(:log?).and_return(false)
         end
 
-        it { expect(subject.handlers).to include FaradayMiddleware::ParseJson, Faraday::Adapter::NetHttp }
+        it { expect(subject.handlers).to include Faraday::Response::Json, Faraday::Adapter::NetHttp }
         it { expect(subject.handlers).not_to include Frodo::Middleware::Logger }
       end
 
@@ -64,7 +64,7 @@ describe Frodo::Middleware::Authentication do
           expect(Frodo).to receive(:log?).and_return(true)
         end
 
-        it { expect(subject.handlers).to include FaradayMiddleware::ParseJson, Faraday::Adapter::NetHttp, Frodo::Middleware::Logger }
+        it { expect(subject.handlers).to include Faraday::Response::Json, Faraday::Adapter::NetHttp, Frodo::Middleware::Logger }
       end
 
       context 'with specified adapter' do
@@ -72,7 +72,7 @@ describe Frodo::Middleware::Authentication do
           options[:adapter] = :typhoeus
         end
 
-        it { expect(subject.handlers).to include FaradayMiddleware::ParseJson, Faraday::Adapter::Typhoeus }
+        it { expect(subject.handlers).to include Faraday::Respone::Json, Faraday::Adapter::Typhoeus }
       end
     end
 

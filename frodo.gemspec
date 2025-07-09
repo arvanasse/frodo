@@ -21,8 +21,10 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = '>= 2.2.0'
 
   spec.add_dependency 'nokogiri', '~> 1.8'
-  spec.add_dependency 'faraday', '= 0.12.2'
-  spec.add_dependency 'faraday_middleware', ['>= 0.8.8', '<= 1.0']
+  spec.add_dependency 'faraday', '~> 2.0'
+  spec.add_dependency 'faraday-http-cache'
+  spec.add_dependency 'faraday-follow_redirects'
+  spec.add_dependency 'faraday-net_http'
   spec.add_dependency 'andand',   '~> 1.3'
 
   spec.add_development_dependency 'rake', '~> 0'
@@ -35,4 +37,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'webmock', '~> 3.4.0'
   spec.add_development_dependency 'timecop', '~> 0.9'
   spec.add_development_dependency 'equivalent-xml', '~> 0.6'
+  spec.add_development_dependency 'faraday-typhoeus'
 end

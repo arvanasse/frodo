@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Frodo
-  class Middleware::Caching < FaradayMiddleware::Caching
+  class Middleware::Caching < Faraday::HttpCache
     def call(env)
       expire(cache_key(env)) unless use_cache?
       super
