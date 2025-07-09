@@ -9,7 +9,7 @@ module Frodo
       # Examples
       #
       #   # Add the instrumentation middleware for Rails.
-      #   client.middleware.use FaradayMiddleware::Instrumentation
+      #   client.middleware.use Faraday::Request::Instrumentation
       #
       # Returns the Faraday::Builder for the Faraday connection.
       def middleware
