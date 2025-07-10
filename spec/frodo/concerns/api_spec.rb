@@ -19,7 +19,8 @@ describe Frodo::Concerns::API do
   let(:connection) do
     Faraday.new(connection_uri, {}) do |conn|
       conn.request :json
-      conn.response :json
+      conn.response :json, content_type: /\bjson/
+      conn.response :raise_error
       conn.adapter Faraday.default_adapter
     end
   end
@@ -33,7 +34,7 @@ describe Frodo::Concerns::API do
   let(:uri) { /#{Regexp.escape(path)}/ }
   let(:options) { {} }
   let(:verb) { :get }
-  let(:headers) { {} }
+  let(:headers) { {'Content-Type' => 'application/json'} }
   let(:entity_type) { 'Type' }
   let(:entity_set) { double(Frodo::EntitySet) }
   let(:entity) { double(Frodo::Entity) }
