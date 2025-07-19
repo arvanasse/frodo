@@ -23,7 +23,7 @@ module Frodo
 
       # The Frodo type name
       def type
-        'Edm.Double'
+        'Edm.Float'
       end
 
       private
@@ -38,7 +38,12 @@ module Frodo
     end
 
     # Defines the Double (Float) Frodo type.
-    class Double < Frodo::Properties::Float; end
+    class Double < Frodo::Properties::Float;
+      # The Frodo type name
+      def type
+        'Edm.Double'
+      end
+    end
 
     # Defines the Single (Float) Frodo type.
     class Single < Frodo::Properties::Float
