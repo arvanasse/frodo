@@ -18,23 +18,25 @@ describe Frodo::Middleware::Authentication::Password do
       }
     end
 
-      let(:success_request) do
-        stub_request(:post, "https://login.window.net/#{options[:tenant_id]}/oauth2/token").with(
-          body: {
-            "client_id"=>options[:client_id], "grant_type"=>"password", "password"=>options[:password],
-            "resource"=>options[:instance_url], "username"=>options[:username]
-          },
-        ).to_return(status: 200, body: fixture("password_auth_success_response"))
-      end
+    let(:success_request) do
+      stub_request(:post, "https://login.window.net/#{options[:tenant_id]}/oauth2/token").with(
+        body: {
+          "client_id"=>options[:client_id], "grant_type"=>"password", "password"=>options[:password],
+          "resource"=>options[:instance_url], "username"=>options[:username]
+        },
+      ).to_return(status: 200,
+                  body: fixture("password_auth_success_response"),
+                  headers: {'Content-Type' => 'applicaiton/json'})
+    end
 
-      let(:fail_request) do
-        stub_request(:post, "https://login.window.net/#{options[:tenant_id]}/oauth2/token").with(
-          body: {
-            "client_id"=>options[:client_id], "grant_type"=>"password", "password"=>options[:password],
-            "resource"=>options[:instance_url], "username"=>options[:username]
-          },
-        ).to_return(status: 400, body: fixture("password_auth_failure_response"))
-      end
+    let(:fail_request) do
+      stub_request(:post, "https://login.window.net/#{options[:tenant_id]}/oauth2/token").with(
+        body: {
+          "client_id"=>options[:client_id], "grant_type"=>"password", "password"=>options[:password],
+          "resource"=>options[:instance_url], "username"=>options[:username]
+        },
+      ).to_return(status: 400, body: fixture("password_auth_failure_response"))
+    end
 
     describe '.authenticate!' do
       context 'when successful' do
