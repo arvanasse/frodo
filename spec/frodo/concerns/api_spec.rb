@@ -19,7 +19,8 @@ describe Frodo::Concerns::API do
   let(:connection) do
     Faraday.new(connection_uri, {}) do |conn|
       conn.request :json
-      conn.response :json
+      conn.response :json, content_type: /\bjson/
+      conn.response :raise_error
       conn.adapter Faraday.default_adapter
     end
   end
@@ -33,13 +34,13 @@ describe Frodo::Concerns::API do
   let(:uri) { /#{Regexp.escape(path)}/ }
   let(:options) { {} }
   let(:verb) { :get }
-  let(:headers) { {} }
+  let(:headers) { {'Content-Type' => 'application/json'} }
   let(:entity_type) { 'Type' }
   let(:entity_set) { double(Frodo::EntitySet) }
   let(:entity) { double(Frodo::Entity) }
   let(:service) { double(Frodo::Service) }
   let(:query) { double(Frodo::Query) }
-  let(:client_error) { Faraday::Error::ClientError.new(StandardError.new) }
+  let(:client_error) { Faraday::ClientError.new(StandardError.new) }
 
   before do
     stub_request(verb, uri).to_return(body: body.to_json, headers: headers)
@@ -221,7 +222,7 @@ describe Frodo::Concerns::API do
       end
 
       it 'sets headers on the built request object' do
-        expect_any_instance_of(Faraday::Builder).to receive(:build_response)
+        expect_any_instance_of(Faraday::RackBuilder).to receive(:build_response)
           .with(anything, have_attributes(headers: hash_including(additional_header)))
 
         subject

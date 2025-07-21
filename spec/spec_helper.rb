@@ -4,6 +4,7 @@ require 'equivalent-xml'
 require 'securerandom'
 require 'timecop'
 require 'webmock/rspec'
+require 'faraday/typhoeus'
 
 # Load all files from `spec/support`
 Dir[File.dirname(__FILE__) + "/support/**/*.rb"].each {|f| require f }

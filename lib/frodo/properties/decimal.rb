@@ -2,6 +2,8 @@ module Frodo
   module Properties
     # Defines the Decimal Frodo type.
     class Decimal < Frodo::Property
+      STRING_DECIMAL_REGEX = /\A[-+]?\d*\.?\d+(e[-+]?\d+)?/i
+
       # Returns the property value, properly typecast
       # @return [BigDecimal,nil]
       def value
@@ -18,6 +20,7 @@ module Frodo
         @value = if (new_value.nil? && !strict? && allows_nil?)
                     nil
                   else
+                    new_value = $& if new_value.to_s =~ STRING_DECIMAL_REGEX
                     validate(BigDecimal(new_value.to_s))
                     new_value.to_s
                   end

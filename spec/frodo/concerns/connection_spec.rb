@@ -50,7 +50,8 @@ describe Frodo::Concerns::Connection do
       end
 
       it "must always be used last before the Faraday Adapter" do
-        expect(client.middleware.handlers.reverse.index(Frodo::Middleware::Logger)).to eq 1
+        # Note: in Faraday 2.x the adapter is held out and added at the very last minute
+        expect(client.middleware.handlers.reverse.index(Frodo::Middleware::Logger)).to eq 0
       end
     end
   end

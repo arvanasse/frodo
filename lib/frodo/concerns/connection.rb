@@ -9,7 +9,7 @@ module Frodo
       # Examples
       #
       #   # Add the instrumentation middleware for Rails.
-      #   client.middleware.use FaradayMiddleware::Instrumentation
+      #   client.middleware.use Faraday::Request::Instrumentation
       #
       # Returns the Faraday::Builder for the Faraday connection.
       def middleware
@@ -37,7 +37,7 @@ module Frodo
           # Caches GET requests.
           builder.use Frodo::Middleware::Caching, cache, options if cache
           # Follows 30x redirects.
-          builder.use FaradayMiddleware::FollowRedirects
+          builder.use Faraday::FollowRedirects::Middleware
           # Raises errors for 40x responses.
           builder.use Frodo::Middleware::RaiseError
           # Parses returned JSON response into a hash.

@@ -20,7 +20,9 @@ describe Frodo::Middleware::Authentication::Token do
         stub_request(:post, "https://login.window.net/common/oauth2/token").with(
           body: "grant_type=refresh_token&refresh_token=refresh_token&" \
                    "client_id=client_id&client_secret=client_secret"
-        ).to_return(status: 200, body: fixture("auth_success_response"))
+        ).to_return(status: 200,
+                    body: fixture("auth_success_response"),
+                    headers: {'Content-Type' => 'applicaiton/json'})
       end
 
       let(:fail_request) do

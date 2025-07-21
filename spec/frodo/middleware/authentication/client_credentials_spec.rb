@@ -20,14 +20,18 @@ describe Frodo::Middleware::Authentication::ClientCredentials do
         stub_request(:post, "https://login.window.net/tenant_id/oauth2/token").with(
           body: "grant_type=client_credentials&" \
                    "client_id=client_id&client_secret=client_secret"
-        ).to_return(status: 200, body: fixture("client_credentials_auth_success_response"))
+        ).to_return(status: 200,
+                    body: fixture("client_credentials_auth_success_response"),
+                    headers: {'Content-Type' => 'applicaiton/json'})
       end
 
       let(:fail_request) do
         stub_request(:post, "https://login.window.net/tenant_id/oauth2/token").with(
           body: "grant_type=client_credentials&" \
                    "client_id=client_id&client_secret=client_secret"
-        ).to_return(status: 400, body: fixture("client_credentials_refresh_error_response"))
+        ).to_return(status: 400,
+                    body: fixture("client_credentials_refresh_error_response"),
+                    headers: {'Content-Type' => 'applicaiton/json'})
       end
 
     describe '.authenticate!' do
